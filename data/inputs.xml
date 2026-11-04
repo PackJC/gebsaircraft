@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+	gebsaircraft's flight controls. They show up under Settings > Controls > Geb's Aircraft
+	and can be rebound there. They are only read while you are flying a plane, so
+	sharing W/A/S/D with walking and driving does no harm. The engine starts and
+	stops with the usual vehicle actions; there are no car gears.
+
+	A player's profile keeps the keys it has saved for an input over these
+	defaults, so moving a default means a new input name. The rudder was on Q/E
+	as UAGebsPlaneYawLeft/Right (now UAGebsPlaneRudderLeft/Right, Z/C), the flaps
+	on V (third person) and B (COT's map editor) as UAGebsPlaneFlapsDown/Up (now
+	UAGebsPlaneFlapsExtend/Retract, X/R: holster and reload, which a pilot can't use).
+
+	W/S       stick forward/back (nose down/up)
+	A/D       stick left/right (roll)
+	Z/C       rudder left/right (also steers the tailwheel on the ground)
+	Shift     throttle up      Ctrl   throttle down   (it stays where you leave it)
+	X         flaps down a notch      R   flaps up a notch
+	Page Up   trim nose up     Page Down   trim nose down
+	Space     wheel brakes
+	G         landing gear up / down (planes with retractable gear)
+-->
+<modded_inputs>
+	<inputs>
+		<actions>
+			<input name="UAGebsPlanePitchDown" loc="STR_GebsPlanes_PitchDown" />
+			<input name="UAGebsPlanePitchUp" loc="STR_GebsPlanes_PitchUp" />
+			<input name="UAGebsPlaneRollLeft" loc="STR_GebsPlanes_RollLeft" />
+			<input name="UAGebsPlaneRollRight" loc="STR_GebsPlanes_RollRight" />
+			<input name="UAGebsPlaneRudderLeft" loc="STR_GebsPlanes_YawLeft" />
+			<input name="UAGebsPlaneRudderRight" loc="STR_GebsPlanes_YawRight" />
+			<input name="UAGebsPlaneThrottleUp" loc="STR_GebsPlanes_ThrottleUp" />
+			<input name="UAGebsPlaneThrottleDown" loc="STR_GebsPlanes_ThrottleDown" />
+			<input name="UAGebsPlaneFlapsExtend" loc="STR_GebsPlanes_FlapsDown" />
+			<input name="UAGebsPlaneFlapsRetract" loc="STR_GebsPlanes_FlapsUp" />
+			<input name="UAGebsPlaneTrimUp" loc="STR_GebsPlanes_TrimUp" />
+			<input name="UAGebsPlaneTrimDown" loc="STR_GebsPlanes_TrimDown" />
+			<input name="UAGebsPlaneBrake" loc="STR_GebsPlanes_Brake" />
+			<input name="UAGebsPlaneGear" loc="STR_GebsPlanes_Gear" />
+		</actions>
+		<sorting name="gebsplanes" loc="STR_GebsPlanes_Controls">
+			<input name="UAGebsPlanePitchDown" />
+			<input name="UAGebsPlanePitchUp" />
+			<input name="UAGebsPlaneRollLeft" />
+			<input name="UAGebsPlaneRollRight" />
+			<input name="UAGebsPlaneRudderLeft" />
+			<input name="UAGebsPlaneRudderRight" />
+			<input name="UAGebsPlaneThrottleUp" />
+			<input name="UAGebsPlaneThrottleDown" />
+			<input name="UAGebsPlaneFlapsExtend" />
+			<input name="UAGebsPlaneFlapsRetract" />
+			<input name="UAGebsPlaneTrimUp" />
+			<input name="UAGebsPlaneTrimDown" />
+			<input name="UAGebsPlaneBrake" />
+			<input name="UAGebsPlaneGear" />
+		</sorting>
+	</inputs>
+	<preset>
+		<input name="UAGebsPlanePitchDown">
+			<btn name="kW" />
+		</input>
+		<input name="UAGebsPlanePitchUp">
+			<btn name="kS" />
+		</input>
+		<input name="UAGebsPlaneRollLeft">
+			<btn name="kA" />
+		</input>
+		<input name="UAGebsPlaneRollRight">
+			<btn name="kD" />
+		</input>
+		<input name="UAGebsPlaneRudderLeft">
+			<btn name="kZ" />
+		</input>
+		<input name="UAGebsPlaneRudderRight">
+			<btn name="kC" />
+		</input>
+		<input name="UAGebsPlaneThrottleUp">
+			<btn name="kLShift" />
+		</input>
+		<input name="UAGebsPlaneThrottleDown">
+			<btn name="kLControl" />
+		</input>
+		<input name="UAGebsPlaneFlapsExtend">
+			<btn name="kX" />
+		</input>
+		<input name="UAGebsPlaneFlapsRetract">
+			<btn name="kR" />
+		</input>
+		<input name="UAGebsPlaneTrimUp">
+			<btn name="kPrior" />
+		</input>
+		<input name="UAGebsPlaneTrimDown">
+			<btn name="kNext" />
+		</input>
+		<input name="UAGebsPlaneBrake">
+			<btn name="kSpace" />
+		</input>
+		<input name="UAGebsPlaneGear">
+			<btn name="kG" />
+		</input>
+	</preset>
+</modded_inputs>

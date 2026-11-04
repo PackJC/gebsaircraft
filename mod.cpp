@@ -1,0 +1,14 @@
+name = "Geb's Aircraft";
+dir = "gebsaircraft";
+overview = "Geb's Aircraft: a flyable Super Cub, a Bf 109 fighter and both of them on floats, each in winter and desert camouflage too";
+credits = "Geb";
+author = "Geb";
+authorID = "0";
+version = "0.3.0";
+picture = "gebsaircraft/data/logo.paa";				// picture in expanded description
+logoSmall = "gebsaircraft/data/logo.paa";			// icon next to mod name when description is not expanded
+logo = "gebsaircraft/data/logo.paa";				// logo below game menu
+logoOver = "gebsaircraft/data/logo_hover.paa";		// on mouse hover over logo
+tooltip = "Geb's Aircraft";						// tool tip on mouse hover
+skeletonDefinitions = "DZ/anims/cfg/skeletons.anim.xml";	// stops the "Can't load gebsaircraft/Anims/cfg/skeletons.anim.xml" RPT error
+action = "https://discord.gg/G8uSGZ8yyf";			// link

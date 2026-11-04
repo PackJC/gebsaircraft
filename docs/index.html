@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <title>Geb's Aircraft</title>
+  <meta name="description" content="Geb's Aircraft for DayZ: a flyable Piper Super Cub, a Messerschmitt Bf 109 E-3, the Bf 109 W on floats and an easy arcade Super Cub on floats, each in winter and desert camouflage. How to fly them, server setup and classnames.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Geb's Aircraft for DayZ">
+  <meta property="og:description" content="Flyable planes for DayZ, in multiplayer: a bush plane, a fighter and two floatplanes.">
+  <meta property="og:url" content="https://packjc.github.io/gebsaircraft/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/PackJC/gebsaircraft/main/docs/assets/gebsaircraft-banner.jpg">
+  <meta property="og:image:alt" content="Geb's Aircraft: a Super Cub, a Bf 109 and a Bf 109 on floats">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Bump ?v= whenever styles.css or app.js changes: GitHub Pages lets browsers cache them for
+       10 minutes, and fresh HTML paired with a stale stylesheet breaks the layout -->
+  <link rel="stylesheet" href="styles.css?v=20261104a">
+  <script src="app.js?v=20261104a" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="top">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Geb's Aircraft, back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+        <span>Geb's Aircraft</span>
+      </a>
+      <nav class="nav-links" id="nav-links" aria-label="Sections">
+        <a href="#hangar">Hangar</a>
+        <a href="#flying">Flying</a>
+        <a href="#install">Setup</a>
+        <a href="#classnames">Classnames</a>
+        <a href="#faq">FAQ</a>
+        <a href="#changelog">Changelog</a>
+      </nav>
+      <a class="pill small" href="https://github.com/PackJC/gebsaircraft">GitHub</a>
+      <button class="menu" id="menu" aria-expanded="false" aria-controls="nav-links" aria-label="Menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <canvas class="clouds" id="clouds" aria-hidden="true"></canvas>
+      <div class="flyby" aria-hidden="true">
+        <svg viewBox="0 0 120 48" width="120" height="48">
+          <g transform="translate(120 0) scale(-1 1)">
+            <path d="M8 27c0-5 6-7 14-7l38-1 38-4 12-9h4l-2 14-8 3-44 6-38 2c-8 0-14-1-14-4Z"/>
+            <path d="M28 13h46v3l-46 1Z"/>
+            <path d="M39 29l11-13 2 1-11 13Z"/>
+            <path d="M92 19l20-1v2l-20 1Z"/>
+            <path d="M4 15h2.5v24H4Z"/>
+            <path d="M14 40h56q5 0 1 3H18q-6 0-4-3Z"/>
+            <path d="M28 31h2v9h-2Zm24-1h2v10h-2Z"/>
+          </g>
+        </svg>
+      </div>
+      <p class="eyebrow rise"><span class="pulse" aria-hidden="true"></span><span>Cleared for takeoff / Chernarus</span></p>
+      <h1 class="rise">Geb's Aircraft.</h1>
+      <p class="lede rise">Flyable planes for DayZ, in multiplayer: a <b>Super Cub</b> bush plane, a <b>Bf 109</b> fighter, and both of them <b>on floats</b>. Start the engine, take off from a field or the sea, and fly.</p>
+      <div class="cta rise">
+        <a class="pill" href="#" data-workshop>Subscribe on Steam</a>
+        <a class="pill" href="#flying">How to fly them</a>
+        <a class="link-arrow" href="#install">Set up your server</a>
+      </div>
+      <p class="fine rise">Version 0.3.0 for DayZ 1.30. A DayZ mod by Geb.</p>
+      <div class="lineup rise" aria-hidden="true">
+        <img src="assets/pa18.webp" alt="" class="l1" width="1100" height="309">
+        <img src="assets/bf109e3.webp" alt="" class="l2" width="1100" height="571">
+        <img src="assets/pa18f.webp" alt="" class="l3" width="1100" height="388">
+      </div>
+    </section>
+
+    <section class="stats" aria-label="At a glance">
+      <div class="stat reveal"><b>4</b><span>aircraft</span></div>
+      <div class="stat reveal"><b>3</b><span>paint schemes each</span></div>
+      <div class="stat reveal"><b>480&nbsp;km/h</b><span>the Bf 109 flat out</span></div>
+      <div class="stat reveal"><b>2</b><span>floatplanes</span></div>
+    </section>
+
+    <section class="band" id="overview">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow">Preflight</p>
+          <h2>Real flight, in DayZ.</h2>
+          <p class="sub">DayZ has no aircraft. Each plane here is a vehicle of its own whose script flies it the way a real one flies: lift and drag on every wing panel and tail surface, a propeller with its torque and slipstream, sprung wheels or floats, an engine and fuel. No car underneath, and the <b>same on the server and the pilot's machine</b>.</p>
+        </header>
+        <div class="tiles">
+          <article class="tile reveal"><h3>A real flight model</h3><p>Every wing panel and tail surface gets its own airflow, so rolling, yawing and the stall come out of the air itself. A wing that stalls first drops and can spin the plane.</p></article>
+          <article class="tile reveal"><h3>Propellers with character</h3><p>Thrust that falls off with speed, torque that rolls the plane, a corkscrew slipstream on the fin, and on the 109 the propeller's gyroscopic kick.</p></article>
+          <article class="tile reveal"><h3>Wheels that roll</h3><p>Each wheel rides a spring and grips up to its load. The tailwheel steers on the pedals, toe brakes help you turn, and a Cub braked too hard noses over.</p></article>
+          <article class="tile reveal"><h3>Floats that float</h3><p>Each float is simulated in slices: buoyancy, planing on the step, the hump of the takeoff run, water rudders, spray and the sound of the water. Swim up and climb in.</p></article>
+          <article class="tile reveal"><h3>Engines and fuel</h3><p>Start them with the start action, run them on their own tanks, refill them from a jerrycan. A crash damages the engine or the airframe where it hits.</p></article>
+          <article class="tile reveal"><h3>The 109's cockpit</h3><p>Fifteen German instruments with moving needles, a stick, pedals, throttle and flap wheel that move, gear lamps, and an inertia starter you hear wind up.</p></article>
+          <article class="tile reveal"><h3>Smooth in multiplayer</h3><p>The pilot's controls ride in DayZ's own vehicle network moves, and every force goes through its deterministic physics, so the server and the pilot fly the same plane.</p></article>
+          <article class="tile reveal"><h3>Winter and desert</h3><p>Every plane in three paint schemes: the 109s whitewashed or in tropical sand and olive, the Cubs in white and grey or sand and brown, the floats to match.</p></article>
+        </div>
+        <aside class="callout reveal">
+          <div><p class="eyebrow">No dependency chain</p><h3>Built to stand alone.</h3><p>No Community Framework, no other mods. Load it on the server and every connecting client.</p></div>
+          <a class="link-arrow" href="https://github.com/PackJC/gebsaircraft">Browse the source</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="band soft" id="hangar">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow">The hangar</p>
+          <h2>Four aircraft.</h2>
+          <p class="sub">Two planes, each on wheels and on floats, and each in three paint schemes. Click a classname to copy it.</p>
+        </header>
+        <div class="grid items planes">
+          <article class="card item reveal">
+            <div class="pic"><img src="assets/pa18.webp" alt="Render of the Piper PA-18 Super Cub in Cub Yellow" width="1100" height="309" loading="lazy"></div>
+            <div class="info">
+              <p class="tag">Bush plane</p>
+              <h3>Piper PA-18 Super Cub</h3>
+              <div class="liveries"><button class="cls" type="button" data-cls="GebsPA18_Yellow">GebsPA18_Yellow</button><button class="cls" type="button" data-cls="GebsPA18_Winter">GebsPA18_Winter</button><button class="cls" type="button" data-cls="GebsPA18_Desert">GebsPA18_Desert</button></div>
+              <p class="desc">The 150&nbsp;hp two-seat tandem bush plane on fat tundra tyres. It takes off from a field and lands slow. It flies like a real one: it stalls, it can spin, it swings on the takeoff run, and in a crosswind it wants to weathervane. The split door folds open, the passenger rides behind you, and the main wheels come off like car wheels.</p>
+              <dl class="facts"><div><dt>Top speed</dt><dd>200 km/h</dd></div><div><dt>Stall</dt><dd>69–74 km/h</dd></div><div><dt>Seats</dt><dd>2</dd></div></dl>
+            </div>
+          </article>
+          <article class="card item reveal">
+            <div class="pic"><img src="assets/bf109e3.webp" alt="Render of the Messerschmitt Bf 109 E-3" width="1100" height="571" loading="lazy"></div>
+            <div class="thumbs"><figure><img src="assets/bf109e3_winter.webp" alt="Render of the Bf 109 E-3 in winter whitewash" loading="lazy"><figcaption>Winter</figcaption></figure></div>
+            <div class="info">
+              <p class="tag">Fighter</p>
+              <h3>Messerschmitt Bf 109 E-3</h3>
+              <div class="liveries"><button class="cls" type="button" data-cls="GebsBF109E3">GebsBF109E3</button><button class="cls" type="button" data-cls="GebsBF109E3_Winter">GebsBF109E3_Winter</button><button class="cls" type="button" data-cls="GebsBF109E3_Desert">GebsBF109E3_Desert</button></div>
+              <p class="desc">The single-seat fighter of 1940: a 1,175&nbsp;PS DB&nbsp;601 on a constant-speed propeller, retractable gear on <kbd>G</kbd>, flaps on a handwheel and slats that slide out by themselves near the stall. Fifteen German instruments, a canopy that swings over, an inertia starter, and its own engine sounds. No guns yet.</p>
+              <dl class="facts"><div><dt>Top speed</dt><dd>480 km/h</dd></div><div><dt>Climb</dt><dd>16 m/s</dd></div><div><dt>Seats</dt><dd>1</dd></div></dl>
+            </div>
+          </article>
+          <article class="card item reveal">
+            <div class="pic"><img src="assets/bf109w.webp" alt="Render of the Bf 109 W afloat on its twin floats" width="1100" height="660" loading="lazy"></div>
+            <div class="info">
+              <p class="tag">Floatplane</p>
+              <h3>Bf 109 W</h3>
+              <div class="liveries"><button class="cls" type="button" data-cls="GebsBF109W">GebsBF109W</button><button class="cls" type="button" data-cls="GebsBF109W_Winter">GebsBF109W_Winter</button><button class="cls" type="button" data-cls="GebsBF109W_Desert">GebsBF109W_Desert</button></div>
+              <p class="desc">The E-3 on twin floats, flown from the sea and the lakes, its gear folded away for good. Hold the stick back over the hump, let it plane on the step, and it comes off the water at about 170&nbsp;km/h. Water rudders on the pedals for taxiing. A wreck's floats flood and it sinks.</p>
+              <dl class="facts"><div><dt>Top speed</dt><dd>400 km/h</dd></div><div><dt>Off the water</dt><dd>~850 m</dd></div><div><dt>Seats</dt><dd>1</dd></div></dl>
+            </div>
+          </article>
+          <article class="card item reveal">
+            <div class="pic"><img src="assets/pa18f.webp" alt="Render of the Super Cub on floats" width="1100" height="388" loading="lazy"></div>
+            <div class="thumbs"><figure><img src="assets/pa18f_desert.webp" alt="Render of the Super Cub on floats in desert camouflage" loading="lazy"><figcaption>Desert</figcaption></figure></div>
+            <div class="info">
+              <p class="tag">Floatplane · Arcade</p>
+              <h3>Super Cub on floats</h3>
+              <div class="liveries"><button class="cls" type="button" data-cls="GebsPA18F_Yellow">GebsPA18F_Yellow</button><button class="cls" type="button" data-cls="GebsPA18F_Winter">GebsPA18F_Winter</button><button class="cls" type="button" data-cls="GebsPA18F_Desert">GebsPA18F_Desert</button></div>
+              <p class="desc">The easy one. The keys turn it at a steady rate and the plane flies itself: let go and it levels its wings and holds its height, hold <kbd>A</kbd> or <kbd>D</kbd> and it banks into a turn without rudder, hold <kbd>S</kbd> and it climbs. It can't stall or spin, lifts itself off the water at full throttle and lands itself with the throttle closed.</p>
+              <dl class="facts"><div><dt>Top speed</dt><dd>200 km/h</dd></div><div><dt>Off the water</dt><dd>~18 s</dd></div><div><dt>Seats</dt><dd>2</dd></div></dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band dark" id="flying">
+      <div class="wrap narrow">
+        <header class="head reveal">
+          <p class="eyebrow">Pilot's notes</p>
+          <h2>How to fly them.</h2>
+          <p class="sub">The keys are the same for every plane, and all of them can be rebound under Settings &gt; Controls &gt; Geb's Aircraft.</p>
+        </header>
+        <div class="table reveal">
+          <table class="keys">
+            <thead><tr><th>Key</th><th>Does</th></tr></thead>
+            <tbody>
+              <tr><td><kbd>W</kbd> / <kbd>S</kbd></td><td>Stick forward (nose down) / back (nose up)</td></tr>
+              <tr><td><kbd>A</kbd> / <kbd>D</kbd></td><td>Roll left / right</td></tr>
+              <tr><td><kbd>Z</kbd> / <kbd>C</kbd></td><td>Rudder left / right, which also steers the tailwheel and the water rudders</td></tr>
+              <tr><td><kbd>Shift</kbd> / <kbd>Ctrl</kbd></td><td>Throttle up / down. The lever stays where you leave it</td></tr>
+              <tr><td><kbd>X</kbd> / <kbd>R</kbd></td><td>Flaps down / up a step</td></tr>
+              <tr><td><kbd>Page Up</kbd> / <kbd>Page Down</kbd></td><td>Trim nose up / down</td></tr>
+              <tr><td><kbd>Space</kbd></td><td>Wheel brakes</td></tr>
+              <tr><td><kbd>G</kbd></td><td>Landing gear up / down (Bf 109 E-3)</td></tr>
+              <tr><td>Hold the start action</td><td>Start the engine; click it to stop</td></tr>
+              <tr><td>Hold <kbd>F</kbd></td><td>Get in or out, anywhere near the cockpit: the door or canopy opens by itself</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <header class="head small reveal">
+          <h2>Pick a plane.</h2>
+        </header>
+        <div class="seg reveal" role="group" aria-label="Aircraft" id="fly-switch">
+          <button type="button" data-show="fly:cub" aria-pressed="true">Super Cub</button>
+          <button type="button" data-show="fly:bf109" aria-pressed="false">Bf 109 E-3</button>
+          <button type="button" data-show="fly:bf109w" aria-pressed="false">Bf 109 W</button>
+          <button type="button" data-show="fly:cubf" aria-pressed="false">Cub on floats</button>
+        </div>
+
+        <div data-panel="fly:cub">
+          <ol class="steps">
+            <li><span class="num">1</span><div><h3>Start and taxi</h3><p>Hold the start action until it fires; it needs fuel and an engine that isn't ruined. Standing still with the throttle shut, the brakes hold it. Open the throttle a little to roll and steer with <kbd>Z</kbd> and <kbd>C</kbd>: the tailwheel steers, and at a crawl the rudder also brakes the wheel on that side.</p></div></li>
+            <li><span class="num">2</span><div><h3>Take off</h3><p>Half flaps (one press of <kbd>X</kbd>), full throttle, and keep it straight with the rudder as it speeds up. Hold <kbd>S</kbd>: the stick stops short of the stall by itself, and it lifts off at about 90&nbsp;km/h and climbs away. Left alone, it flies off at about 105&nbsp;km/h with half flaps.</p></div></li>
+            <li><span class="num">3</span><div><h3>Fly</h3><p>It climbs at about 5&nbsp;m/s, cruises at 160–180&nbsp;km/h and tops out around 200. Clean it stalls at about 74&nbsp;km/h, 69 with full flaps. Pull too hard and a wing drops.</p></div></li>
+            <li><span class="num">4</span><div><h3>Land</h3><p>Full flaps, about 80&nbsp;km/h on the approach, throttle to idle over the field. Touch down on all three wheels and brake gently: a Cub braked hard noses over onto its propeller.</p></div></li>
+            <li><span class="num">5</span><div><h3>Refuel</h3><p>Stand by the left side of the cabin with a jerrycan of fuel and look up under the wing root. The tanks hold 136&nbsp;L.</p></div></li>
+          </ol>
+        </div>
+
+        <div data-panel="fly:bf109" hidden>
+          <ol class="steps">
+            <li><span class="num">1</span><div><h3>Climb in and start</h3><p>Stand near the cockpit, on either side or on the wing, and hold <kbd>F</kbd>: the canopy opens by itself. Hold the start action: the inertia starter's flywheel winds up for three seconds, engages, and the engine fires about four seconds after you began. Close the canopy before you go.</p></div></li>
+            <li><span class="num">2</span><div><h3>The takeoff run</h3><p>Half flaps (two presses of <kbd>X</kbd>). Open the throttle smoothly over a few seconds and keep it straight with taps of rudder, not long presses. Leave the ailerons alone until the tail is up. At about 100&nbsp;km/h ease the stick forward to bring the tail up, nose just above the horizon; around 150–160&nbsp;km/h ease back and it flies off after about 390&nbsp;m. Don't take off on full flaps.</p></div></li>
+            <li><span class="num">3</span><div><h3>Gear up, and fly</h3><p><kbd>G</kbd> once you're climbing. Best climb is about 270&nbsp;km/h at 16&nbsp;m/s; it cruises at 350–400 and tops out around 480 low down. Held <kbd>S</kbd> pulls steadily and stops short of the stall. It stalls at about 145&nbsp;km/h clean, 130 with full flaps.</p></div></li>
+            <li><span class="num">4</span><div><h3>Land</h3><p>Gear down (the green lamp) and full flaps below 250&nbsp;km/h. Approach at 170–180&nbsp;km/h and hold off to a three-point touchdown at about 140. The brakes are strong and the gear narrow: steer with the rudder and brake gently.</p></div></li>
+            <li><span class="num">5</span><div><h3>Refuel</h3><p>The filler is on the left side behind the cockpit, by the yellow triangle. The tank holds 400&nbsp;L, about an hour at full power.</p></div></li>
+          </ol>
+        </div>
+
+        <div data-panel="fly:bf109w" hidden>
+          <ol class="steps">
+            <li><span class="num">1</span><div><h3>On the water</h3><p>It sits about half a metre deep, the propeller well clear. There are no brakes on the water: at idle it creeps along at about 6&nbsp;km/h, and the rudder keys turn the water rudders up to about 45&nbsp;km/h. Climb in from a jetty, the shallows, or swimming alongside.</p></div></li>
+            <li><span class="num">2</span><div><h3>Take off</h3><p>Half flaps, hold <kbd>S</kbd> and open the throttle all the way. The bow rises over the hump at 30–40&nbsp;km/h; from about 60&nbsp;km/h it's up on the step, and holding <kbd>S</kbd> eases to the planing attitude by itself. It comes off at about 170&nbsp;km/h, some 850&nbsp;m and 35&nbsp;s from the start. Use the sea or a big lake.</p></div></li>
+            <li><span class="num">3</span><div><h3>Fly</h3><p>Slower and heavier than the E-3: about 400&nbsp;km/h flat out and 9&nbsp;m/s climb. Everything in the cockpit is the E-3's; there's no gear to work.</p></div></li>
+            <li><span class="num">4</span><div><h3>Land</h3><p>Full flaps, 165–170&nbsp;km/h on the approach, throttle to idle. Touch down a little nose up, sinking slowly, hold that attitude while it runs on the step, and ease back below about 90&nbsp;km/h. Coming down too hard damages it, and a propeller in the water drowns the engine.</p></div></li>
+          </ol>
+        </div>
+
+        <div data-panel="fly:cubf" hidden>
+          <ol class="steps">
+            <li><span class="num">1</span><div><h3>The arcade keys</h3><p>On this one the keys ask for a turn, and the plane does the flying. <kbd>W</kbd> / <kbd>S</kbd> pitch at a steady rate while held; let go and it eases back to level flight. <kbd>A</kbd> / <kbd>D</kbd> bank up to 60°; let go and the wings roll level. You don't need the rudder in a turn.</p></div></li>
+            <li><span class="num">2</span><div><h3>Take off by itself</h3><p>On the water, open the throttle all the way and let go of everything. It gets up on the step and lifts off by itself at about 110&nbsp;km/h, some 18&nbsp;s later. Hold <kbd>S</kbd> as it goes and it's off sooner and climbs away. <kbd>Z</kbd> and <kbd>C</kbd> turn it on the spot on the water.</p></div></li>
+            <li><span class="num">3</span><div><h3>Fly</h3><p>Hands off, it flies straight and level at any throttle; the throttle sets the speed, up to about 200&nbsp;km/h. Hold <kbd>S</kbd> to climb at about 5&nbsp;m/s, hold <kbd>D</kbd> to turn about 20° a second. It can't stall or spin.</p></div></li>
+            <li><span class="num">4</span><div><h3>Land by itself</h3><p>Close the throttle and let go. It slows to about 85&nbsp;km/h and settles onto the water, wings level. Holding <kbd>S</kbd> for the last few metres makes it softer.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="install">
+      <div class="wrap narrow">
+        <header class="head reveal">
+          <p class="eyebrow">Ground crew</p>
+          <h2>Install Geb's Aircraft.</h2>
+          <p class="sub">Choose the player path for local use or the server path for a community server. The Workshop is the authorized distribution source.</p>
+        </header>
+        <div class="seg reveal" role="group" aria-label="Installation type" id="install-switch">
+          <button type="button" data-show="install:player" aria-pressed="false">Player</button>
+          <button type="button" data-show="install:server" aria-pressed="true">Server owner</button>
+        </div>
+
+        <div data-panel="install:player" hidden>
+          <ol class="steps">
+            <li><span class="num">1</span><div><h3>Subscribe on the Workshop</h3><p>Open Geb's Aircraft on Steam and select <b>Subscribe</b>.</p></div></li>
+            <li><span class="num">2</span><div><h3>Let Steam download the mod</h3><p>Wait for the DayZ Workshop download to finish before starting the launcher.</p></div></li>
+            <li><span class="num">3</span><div><h3>Join a server that runs it</h3><p>The official DayZ launcher can load the server's Workshop mods for you.</p></div></li>
+          </ol>
+        </div>
+
+        <div data-panel="install:server">
+          <ol class="steps">
+            <li><span class="num">1</span><div><h3>Download the mod</h3><p>Subscribe with the server's Steam account, or fetch the Workshop item with your usual SteamCMD workflow.</p></div></li>
+            <li><span class="num">2</span><div><h3>Install and key the server</h3><p>Place the mod folder beside the DayZ server executable, and copy its <code>.bikey</code> file into the server's <code>keys</code> folder.</p></div></li>
+            <li><span class="num">3</span><div><h3>Add the launch parameter</h3><p>Load the mod in your server's startup command, on the server and every client.</p><div class="code"><button class="copy" type="button" data-copy="launch-code">Copy</button><pre><code id="launch-code">-mod=@gebsaircraft</code></pre></div></div></li>
+            <li><span class="num">4</span><div><h3>Register the planes in <code>db/types.xml</code></h3><p>The planes have no spawn points of their own (nominal 0): you place them with an admin tool, or give them an event at your airfields. Paste their rows inside your <code>&lt;types&gt;</code>; the spare main wheels spawn as industrial loot. The whole file has every plane, scheme and wheel.</p><div class="code"><span class="code-file">db/types.xml</span><button class="copy" type="button" data-copy="ce-types">Copy</button><pre><code id="ce-types" class="language-xml">&lt;type name="GebsPA18_Yellow"&gt;
+    &lt;nominal&gt;0&lt;/nominal&gt;
+    &lt;lifetime&gt;3&lt;/lifetime&gt;
+    &lt;restock&gt;1800&lt;/restock&gt;
+    &lt;min&gt;0&lt;/min&gt;
+    &lt;quantmin&gt;-1&lt;/quantmin&gt;
+    &lt;quantmax&gt;-1&lt;/quantmax&gt;
+    &lt;cost&gt;100&lt;/cost&gt;
+    &lt;flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/&gt;
+&lt;/type&gt;</code></pre></div><p><a class="link-arrow" href="server/gebsaircraft-types.xml" download>Download every plane's rows</a></p></div></li>
+            <li><span class="num">5</span><div><h3>Give the planes their wheels in <code>cfgspawnabletypes.xml</code></h3><p>So a Cub or a Bf 109 the economy spawns comes on both main wheels. The floatplanes need nothing.</p><div class="code"><span class="code-file">cfgspawnabletypes.xml</span><button class="copy" type="button" data-copy="ce-spawn">Copy</button><pre><code id="ce-spawn" class="language-xml">&lt;type name="GebsPA18_Yellow"&gt;
+    &lt;attachments chance="1.00"&gt;
+        &lt;item name="GebsPA18_Wheel" chance="1.0" /&gt;
+    &lt;/attachments&gt;
+    &lt;attachments chance="1.00"&gt;
+        &lt;item name="GebsPA18_Wheel" chance="1.0" /&gt;
+    &lt;/attachments&gt;
+&lt;/type&gt;</code></pre></div><p><a class="link-arrow" href="server/gebsaircraft-spawnabletypes.xml" download>Download every plane's entries</a></p></div></li>
+            <li><span class="num">6</span><div><h3>Place them and fly</h3><p>Spawn a plane with your admin tool: the Cub and the Bf 109 on open ground, the floatplanes on the water or in the shallows. A new plane comes with half tanks. In COT, spawn it with the health at full (1200) or left empty: a health of 0 gives you a ruined plane whose engine never starts.</p></div></li>
+          </ol>
+          <div class="note warn reveal"><b>Do not repack the Workshop release.</b><p>Use a Steam Collection to distribute the required mod to your players.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band soft" id="classnames">
+      <div class="wrap">
+        <header class="head reveal">
+          <p class="eyebrow">Reference</p>
+          <h2>Every classname.</h2>
+          <p class="sub">All public classes, for spawning, trader lists and loot tables. Click a name to copy it.</p>
+        </header>
+        <div class="tools reveal">
+          <label class="search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg><input id="classname-search" type="search" placeholder="Search classnames" autocomplete="off" aria-label="Search classnames"></label>
+          <label class="select"><span class="sr">Type</span><select id="classname-filter"><option value="all">All types</option><option value="Aircraft">Aircraft</option><option value="Floatplane">Floatplane</option><option value="Wheel">Wheel</option></select></label>
+          <span class="count" id="result-count"></span>
+        </div>
+        <div class="table reveal" id="classname-table"><table><thead><tr><th>Classname</th><th>Type</th><th>Description</th></tr></thead><tbody id="classname-body"></tbody></table></div>
+        <p class="empty" id="empty-state" hidden>No classnames match that search.</p>
+      </div>
+    </section>
+
+    <section class="band" id="faq">
+      <div class="wrap narrow">
+        <header class="head reveal"><p class="eyebrow">Troubleshooting</p><h2>Questions.</h2></header>
+        <div class="faq reveal">
+          <details><summary>How do I get in and start the engine?</summary><p>Stand anywhere near the cockpit, look at the plane and hold <kbd>F</kbd>: the door or canopy opens by itself. Then hold the start action until the engine fires. It needs fuel and an engine that isn't ruined; if it won't fire, the script log says why.</p></details>
+          <details><summary>The Cub swings or noses over on the takeoff run.</summary><p>That's a taildragger: keep it straight with taps of rudder, keep a little back stick early on so the tail stays down, and brake gently. The Super Cub on floats is the easy one if you'd rather not.</p></details>
+          <details><summary>Where do the floatplanes go?</summary><p>On the sea or a lake. They can't take off from land, where they rest on their floats. Spawned under the water, they come up by themselves.</p></details>
+          <details><summary>Is there wind?</summary><p>Not yet. The server and each player's machine keep their own copy of the weather, and a plane flown on two different winds drifts apart between them, so the planes leave it out for now.</p></details>
+          <details><summary>Does every player need the mod?</summary><p>Yes. It contains models, textures, sounds, scripts and the controls, so it must run on the server and all clients.</p></details>
+          <details><summary>Does it require Community Framework?</summary><p>No. It needs no other mod.</p></details>
+          <details><summary>I updated from 0.1 and my planes are gone.</summary><p>Planes before 0.2 were cars underneath and are saved differently; delete them on the server before updating, and spawn new ones.</p></details>
+          <details><summary>Can I include this in a server pack?</summary><p>No. Subscribe to the authorized Workshop release and use a Steam Collection for your server's mod list.</p></details>
+        </div>
+        <div class="support reveal">
+          <a href="https://discord.gg/G8uSGZ8yyf"><span>Community support</span><b>Join Discord</b></a>
+          <a href="https://github.com/PackJC/gebsaircraft/issues"><span>Found a bug?</span><b>Open a GitHub issue</b></a>
+          <a href="https://github.com/PackJC/gebsaircraft"><span>The source</span><b>Visit GitHub</b></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band soft" id="changelog">
+      <div class="wrap narrow">
+        <header class="head reveal">
+          <p class="eyebrow">Logbook</p>
+          <h2>What's new.</h2>
+          <p class="sub">What changed in each release.</p>
+        </header>
+        <div class="releases">
+          <article class="release reveal"><span class="ver">0.3</span><div><h3>Version 0.3.0: new aircraft</h3><ul>
+            <li>Messerschmitt Bf 109 E-3: a DB&nbsp;601 on a constant-speed propeller, retractable gear, flaps, automatic slats, a working cockpit with fifteen instruments, an inertia starter and its own sounds.</li>
+            <li>Bf 109 W: the E-3 on twin floats, flown from the sea and the lakes, with water rudders, spray and the sound of the water.</li>
+            <li>Super Cub on floats, flown arcade: it levels itself, turns without rudder, can't stall, and takes off and lands by itself.</li>
+            <li>Winter and desert camouflage for every plane, the floats painted to match.</li>
+            <li>Floatplanes can be boarded from the water.</li>
+            <li>The mod is now <code>gebsaircraft</code>: its folder, PBO prefix and paths. Classnames, keybinds and saved planes are the same.</li>
+          </ul></div></article>
+          <article class="release reveal"><span class="ver">0.3</span><div><h3>Version 0.3.0: every plane</h3><ul>
+            <li>Smooth on the pilot's machine: the simulation works from the physics body's own position, so the server's corrections land where the plane already is.</li>
+            <li>No more invisible drag: a new body's default damping held the planes back on the runway.</li>
+            <li>Wheels can't sink through the ground, tyres no longer rock a parked plane, and wheels spin true.</li>
+            <li>Wings have dihedral, so a plane let go rolls level instead of spiralling into a dive.</li>
+            <li>The engine starts on both machines at once, and the plane keeps itself awake while crewed or running.</li>
+          </ul></div></article>
+          <article class="release reveal"><span class="ver">0.2</span><div><h3>Version 0.2.0: rebuilt without a car underneath</h3><ul>
+            <li>A bare vehicle with its own wheels, engine, fuel tank and instrument panel, with no car physics underneath. The server stopped correcting the plane 30 times a second.</li>
+            <li>Crashes damage the engine or the airframe where they hit; refuel from a jerrycan under the wing root.</li>
+            <li>Delete every plane on the server before updating from 0.1.</li>
+          </ul></div></article>
+          <article class="release reveal"><span class="ver">0.1</span><div><h3>Version 0.1.0</h3><p>First release: the Piper PA-18 Super Cub, its flight model, controls, moving surfaces, door and paint.</p></div></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot-top">
+        <span class="brand"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg><span>Geb's Aircraft</span></span>
+        <nav aria-label="Elsewhere"><a href="#" data-workshop>Steam Workshop</a><a href="https://github.com/PackJC/gebsaircraft">GitHub</a><a href="https://discord.gg/G8uSGZ8yyf">Discord</a></nav>
+      </div>
+      <nav class="family" aria-label="More mods by Geb"><span>More by Geb:</span><a href="https://packjc.github.io/gebsfish/">Gebsfish</a><a href="https://packjc.github.io/gebsanimals/">Geb's Animals</a><a href="https://packjc.github.io/gebsplants/">Geb's Plants</a><a href="https://packjc.github.io/gebsmushrooms/">Geb's Mushrooms</a><a href="https://packjc.github.io/alieninvasion/">Alien Invasion</a><a href="https://packjc.github.io/gebsaircraft/" aria-current="page">Geb's Aircraft</a><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2886269800">Thanksgiving</a><a href="https://github.com/PackJC/greatsmokymountains">Great Smoky Mountains</a></nav>
+      <p>A DayZ community mod by Geb / Cole. DayZ and Bohemia Interactive are trademarks of Bohemia Interactive. This project is not affiliated with or endorsed by Bohemia Interactive.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+</body>
+</html>
