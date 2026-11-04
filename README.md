@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://packjc.github.io/gebsaircraft/"><img src=".github/logo.png" alt="Geb's Aircraft — a Bf 109 climbing out over the pines" width="600"></a>
+  <a href="https://packjc.github.io/gebsaircraft/"><img src="docs/assets/gebsaircraft-banner.jpg" alt="Geb's Aircraft — the Piper Cub and the Bf 109, on wheels and on floats" width="600"></a>
   <br>
   <a href="https://discord.gg/G8uSGZ8yyf"><img src="https://img.shields.io/badge/Join-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join the Discord"></a>
   <br>
