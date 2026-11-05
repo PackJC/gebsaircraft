@@ -26,7 +26,10 @@
     { name: "GebsBF109W_Winter", type: "Floatplane", img: "bf109w", description: "The Bf 109 W whitewashed for the winter, its floats too." },
     { name: "GebsBF109W_Desert", type: "Floatplane", img: "bf109w", description: "The Bf 109 W in the tropical scheme, its floats sand and olive over light blue." },
     { name: "GebsPA18_Wheel", type: "Wheel", description: "The Super Cub's main wheel: a low-pressure bush tyre. Spawns as industrial loot." },
-    { name: "GebsBF109_Wheel", type: "Wheel", description: "The Bf 109's 650 x 150 mm main wheel. Spawns as industrial loot." }
+    { name: "GebsBF109_Wheel", type: "Wheel", description: "The Bf 109's 650 x 150 mm main wheel. Spawns as industrial loot." },
+    { name: "GebsHe162A2", type: "Aircraft", description: "Heinkel He 162 A-2 early jet, one late-war camouflage without swastikas. Retractable tricycle gear and working cockpit. Live flight verification pending." },
+    { name: "GebsHe162_Wheel", type: "Wheel", description: "The He 162's removable main wheel, approximately 655 x 215 mm in the current model/config. Two fitted." },
+    { name: "GebsHe162_NoseWheel", type: "Wheel", description: "The He 162's separate removable nose wheel, approximately 376 x 132 mm in the current model/config." }
   ];
 
   // ---- copy + toast

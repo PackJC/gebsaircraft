@@ -53,6 +53,7 @@ class CfgMods {
 		// the flight controls: stick, rudder, throttle, flaps, trim, brakes
 		inputs="gebsaircraft/data/inputs.xml";
 		dependencies[]= {
+			"Game",
 			"World",
 			"Mission"
 		};
@@ -60,6 +61,13 @@ class CfgMods {
 			"GEBSPLANES"
 		};
 		class defs {
+			// the mod's particles (ParticleList)
+			class gameScriptModule {
+				value="";
+				files[]= {
+					"gebsaircraft/scripts/3_game"
+				};
+			};
 			class worldScriptModule {
 				value="";
 				files[]= {

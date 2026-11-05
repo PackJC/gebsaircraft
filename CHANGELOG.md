@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- **Heinkel He 162 A-2** (`GebsHe162A2`), in one worn late-war camouflage without swastikas. Adapted from the CadNav source model for the shared DayZ aircraft simulation.
+- BMW 003-style turbojet thrust and spool-up, synthesized engine/start/shutdown audio, an orange exhaust flame (a camping-stove-style flame jet, `data/particles/gebshe162_jetflame.ptc`) that grows with the throttle, with heat haze and a warm glow on the tail. No afterburner.
+- **Short-field takeoff tuning** for DayZ's airfields: the thrust acts through the centre of gravity (`thrustAtCom`, new in the shared flight model) so the high engine no longer pins the nose wheel, with more thrust (11,500 N), faster spool-up, more flap lift and a stronger elevator. It should leave the ground in roughly 400 m with half or full flaps.
+- Retractable tricycle gear and doors, two removable main wheels (`GebsHe162_Wheel`) and a separate nose wheel (`GebsHe162_NoseWheel`). G operates the gear; X/R operates the flaps.
+- Eight cockpit instrument faces with nine moving needles, animated flight controls and gear indications, plus server economy/spawn attachments and source credits.
+- **Validation status:** live DayZ flight verification remains pending. The initial flight coefficients are a simulation approximation; no measured in-game performance is claimed for the new jet.
+
 ## v0.3.0
 
 **Renamed gebsaircraft.** The mod's folder, PBO prefix and every path in it are now `gebsaircraft` (it was GebsPlanes): pack it under that prefix into `@gebsaircraft`. The classes, keybinds and saved planes are the same.

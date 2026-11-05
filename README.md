@@ -35,8 +35,9 @@ DayZ has no aircraft. Geb's Aircraft adds them, on a realistic flight model and 
 * the **Messerschmitt Bf 109 E-3**, the single-seat fighter of 1940, with retractable gear, flaps, slats, a constant-speed propeller and a working cockpit (no guns yet);
 * the **Bf 109 W**, the same fighter on twin floats, flying from the sea and the lakes;
 * the **Super Cub on floats**, flown arcade: the easy one. It takes off by itself, flies itself straight and level, banks into turns without rudder and can't stall or spin.
+* the **Heinkel He 162 A-2**, a single-seat early jet with a dorsal BMW 003 engine, retractable tricycle gear and a working cockpit. This new aircraft is pending live flight verification.
 
-Every plane also comes in a **winter** and a **desert** camouflage. The [website](https://packjc.github.io/gebsaircraft/) has how to fly each one, the server setup and every classname.
+The Cubs and Bf 109s also come in **winter** and **desert** camouflage. The He 162 has one worn late-war camouflage, without swastikas. The [website](https://packjc.github.io/gebsaircraft/) has flying notes, server setup and classnames.
 
 ## Key Features
 
@@ -45,9 +46,10 @@ Every plane also comes in a **winter** and a **desert** camouflage. The [website
 - **Wheels and floats:** sprung wheels that grip up to their load, a steering tailwheel and toe brakes; floats simulated in slices, with buoyancy, planing on the step, the hump of the takeoff run, water rudders, spray and the sound of the water
 - **Engines and fuel:** start them with the start action, run them on their own tanks, refill them from a jerrycan; crashes damage the engine or the airframe where they hit, and a propeller in the water drowns the engine
 - **The 109's cockpit:** fifteen German instruments with moving needles, a stick, pedals, throttle and flap wheel that move, gear lamps, and an inertia starter you hear wind up
+- **The He 162:** jet thrust and turbine spool-up, three removable wheels, animated cockpit controls and eight instrument faces with nine moving needles; an orange exhaust flame that grows with the throttle, with heat haze
 - **An instrument panel on the HUD** in place of a car's speedometer
 - **Arcade flying** for the Cub on floats: the keys ask for turn rates and the plane flies itself
-- **Winter and desert camouflage** for every plane, the floats painted to match
+- **Winter and desert camouflage** for the Cubs and Bf 109s, the floats painted to match
 - **Smooth in multiplayer:** the server and the pilot's machine fly the same plane
 - **Standalone:** no Community Framework, no other mods
 
@@ -69,12 +71,13 @@ A plane is a bare `Transport`. [scripts/4_world/entities/vehicles/gebsplane.c](s
   * a panel that passes its stall angle loses its lift, so a wing that stalls first drops and can start a spin
 * **The wing's downwash** over the tailplane, and **ground effect** close to the ground or the water.
 * **The propeller.** Its thrust falls off with airspeed. Its torque rolls the plane left, and its corkscrew slipstream hits the fin, so the takeoff run needs right rudder. A dead engine's propeller windmills and drags.
+* **The He 162's turbojet** ([gebshe162.c](scripts/4_world/entities/vehicles/gebshe162.c)). Its turbine spools with the throttle and produces direct thrust, with no propeller torque or slipstream. Its flight coefficients are an initial simulation approximation pending live testing.
 * **Arcade flying**, for a plane whose config turns it on (`GebsFlight Arcade`; the Cub on floats). The stick and pedals ask for turn rates, and the assist turns the plane at them, as Alien Invasion's UFO's drive does, taking over the air's own turning moments while the wings still lift and drag. Let go, the wings roll level and the flight path eases level. Banked, the nose follows the turn round without rudder. Near the stall the nose comes down by itself, and a held pull climbs only as steeply as the speed keeps up.
 * **Fuel** in its own tank, filled from a jerrycan with vanilla's refuel action. **Crashes** damage the engine or the airframe, wherever they hit.
 * **No weather wind, for now.** The server and the pilot's machine each keep their own copy of the weather, and a plane flown on two different winds drifts apart between them (see Multiplayer). `windScale` in `GebsFlight` brings it back.
 * **An instrument panel** on the HUD ([scripts/5_mission/gui/gebsplanehud.c](scripts/5_mission/gui/gebsplanehud.c)) in place of a car's speedometer.
 
-Everything a plane is made of lives in its config's `GebsFlight` class, with the positions of its surfaces, wheels, floats, propeller and door as memory points in its model. A new plane needs a model and a config, not new code.
+Everything a plane is made of lives in its config's `GebsFlight` class, with the positions of its surfaces, wheels, floats, thrust line and door as memory points in its model. The He 162 adds a turbojet subclass to the shared aircraft simulation.
 
 **Multiplayer.** As with every DayZ vehicle, the pilot's own client simulates the plane, and the server simulates it too from the same moves, correcting the pilot's machine wherever the two part company. Each correction is a jolt, so the simulation has to come out the same on both:
 * the pilot's controls ride in the vehicle's network move, and the engine's switches are thrown on both machines at once;
@@ -154,6 +157,28 @@ The keys are the Cub's, and one more:
 * **Getting out.** Stop the engine (click), then hold F. The canopy opens by itself, and you come out on the left, just behind the wing. To leave it moving, open the canopy (F) and hold F to eject, as from the Cub.
 * **Refuelling.** The filler is on the left side behind the cockpit (the yellow triangle). Stand there with a jerrycan. The tank holds 400 L, about an hour at full power.
 
+## Flying the He 162
+
+`GebsHe162A2` is the single-seat Heinkel He 162 A-2 in one late-war camouflage. It uses the shared aircraft controls and a BMW 003-style turbojet. **Live flight verification is pending:** takeoff, landing and performance figures have not been established in DayZ.
+
+| Key | Does |
+| --- | --- |
+| W / S, A / D | Pitch and roll |
+| Z / C | Rudder and nose-wheel steering on the ground |
+| Shift / Ctrl | Throttle up / down; allow time for the turbine to spool |
+| G | Retract / extend all three landing-gear legs |
+| X / R | Flaps down / up a notch: up, half, full |
+| Page Up / Page Down | Nose-up / nose-down trim |
+| Space | Main-wheel brakes |
+| F / hold F | Open or close the canopy / get in or out using the shared aircraft actions |
+
+* **Getting started.** Spawn it on clear, level ground and fit two `GebsHe162_Wheel` main wheels and one `GebsHe162_NoseWheel`. A debug spawn supplies all three wheels, full fuel and an open canopy. Hold the usual start action to complete the starter cycle, then close the canopy before taxiing.
+* **The panel.** Eight faces show airspeed, altitude with separate metre and kilometre hands, climb/descent, heading, turbine rpm, fuel, exhaust temperature and oil pressure. The stick, pedals, throttle, flap control and gear lever move with the controls.
+* **The gear.** G operates the main legs and nose leg together, with their doors. The shared gear system prevents retraction while the wheels carry the aircraft's weight; extend it before landing and confirm the down indication.
+* **Exhaust.** The BMW 003 has no afterburner. An orange flame jet, modelled on the camping stove's flame, shoots from the nozzle and lengthens with the throttle, with heat haze and a warm glow on the tail.
+* **Taking off.** Its thrust and lift are tuned up for DayZ's short airfields. Set half or full flaps (X), run the throttle up to full and let the turbine spool, release the brakes, and pull back gently from about 130 km/h. It should lift off in roughly 400 m.
+* **Fuel and parts.** The configured tank holds 695 L. The main and nose wheels are different items; fit them to their matching inventory slots. The existing jerrycan refuelling and aircraft damage/persistence systems apply.
+
 ## Flying the Bf 109 W on Floats
 
 The E-3 on twin floats (`GebsBF109W`), after a photo of a 109 on floats: its gear folded away for good, a float under each wing on one broad strut, braced forward to the engine by a slimmer one, a water rudder on each float's tail. Everything in the cockpit is the E-3's, and so are the keys, except there's no gear to work (G does nothing, both gear lamps stay dark) and no wheel brakes. It weighs 2,790 kg, about 290 more than the E-3.
@@ -206,7 +231,9 @@ The Super Cub on twin floats (`GebsPA18F_Yellow`, `_Winter`, `_Desert`), flown a
 
 1. Load the mod with `-mod=@gebsaircraft` on the server and every client, and copy its `.bikey` into the server's `keys` folder.
 2. Add the planes to `db/types.xml` and their wheels to `cfgspawnabletypes.xml`. Ready-made entries for every plane, scheme and wheel are on the website: [types](https://packjc.github.io/gebsaircraft/server/gebsaircraft-types.xml), [spawnable types](https://packjc.github.io/gebsaircraft/server/gebsaircraft-spawnabletypes.xml).
-3. The planes have no spawn points yet (nominal 0). Place them with admin tools, or give them an event of their own at the airfields. A new plane comes with half tanks. A debug spawn comes ready to fly: both main wheels, full tanks and the door open; COT's own spawner doesn't call it for a plane, so a COT spawn has the half tanks.
+3. The planes have no spawn points yet (nominal 0). Place them with admin tools, or give them an event of their own at the airfields. A new plane comes with half tanks. A debug spawn supplies the removable wheels, full tanks and an open door or canopy; the He 162 needs two main wheels and its separate nose wheel. COT's own spawner doesn't call this for a plane, so a COT spawn has the half tanks.
+
+The He 162's economy entry is `GebsHe162A2`. Add two guaranteed `GebsHe162_Wheel` attachment entries and one `GebsHe162_NoseWheel` entry in `cfgspawnabletypes.xml`; the supplied download includes all three. Keep the new jet on a test server until its live flight checks are complete.
 
 In COT, spawn a plane with the health at full (1200) or left empty. COT applies the health field after spawning, so a health of 0 gives you a ruined plane: it looks the same, opens its door and takes a pilot, but its engine never starts.
 
@@ -224,6 +251,9 @@ In COT, spawn a plane with the health at full (1200) or left empty. COT applies 
 | `GebsBF109E3_Winter`, `GebsBF109E3_Desert` | The E-3 whitewashed for the winter, or in RLM 79/80 over RLM 78 with a white fuselage band |
 | `GebsBF109_Wheel` | Its main wheel, 650 x 150 mm |
 | `GebsBF109W`, `GebsBF109W_Winter`, `GebsBF109W_Desert` | The Bf 109 W on floats. Spawn it on the water, or on a beach or in the shallows to push off from: on land it can't take off. Spawned under the water, it comes up by itself |
+| `GebsHe162A2` | Heinkel He 162 A-2, one late-war camouflage without swastikas; live flight verification pending |
+| `GebsHe162_Wheel` | Its removable main wheel; two fitted, approximately 655 × 215 mm in the current model/config |
+| `GebsHe162_NoseWheel` | Its separate removable nose wheel, approximately 376 × 132 mm in the current model/config |
 
 ## Project Structure
 
@@ -234,6 +264,7 @@ gebsaircraft/
 ├── data/
 │   ├── config.cpp        the Super Cubs: their flight, wheels, floats and the arcade assist
 │   ├── bf109/            the Bf 109s: models, config, textures, sounds
+│   ├── he162/            the He 162: model, config, cockpit, wheel proxies, textures, sounds
 │   ├── pa18/             the Super Cubs' models, textures and wheel
 │   ├── gui/              the instrument panel's layout
 │   └── inputs.xml        the flight controls
@@ -244,7 +275,7 @@ gebsaircraft/
 └── docs/                 the website (GitHub Pages)
 ```
 
-The models, textures and sounds are generated by Python and Blender tools from the source models. Those, and everything they work from, are kept outside the repository.
+The models, textures and sounds are generated by Python and Blender tools from the source models. Those, and everything they work from, are kept outside the repository. The He 162's authoring files, reference notes and checks currently live in the workspace's `review-output/he162/dev/`; its original source archive is retained separately in `review-output/he162/source/`.
 
 **Packing:** pack the folder as one PBO with the prefix `gebsaircraft`; `docs/`, `.github/` and the Markdown files can stay out of it. Copy `mod.cpp` into `@gebsaircraft` next to `Addons`; without it the game logs `Can't load @gebsaircraft/Anims/cfg/skeletons.anim.xml` on every start. Addon Builder only packs the file types on its *List of files to copy directly* (Options): add `*.layout`, or the instrument panel's layout (`data/gui/gebsplanehud.layout`) is left out and the script log says `Cannot open layout`. (The mod was GebsPlanes until 0.3.0: its folder, PBO prefix and every path in it are now gebsaircraft. The classes, keybinds and saved planes are the same.)
 
@@ -257,7 +288,7 @@ Every mod by Geb stands on its own, so a server can run the ones it wants:
 * [Geb's Plants](https://github.com/PackJC/gebsplants) ([website](https://packjc.github.io/gebsplants/)): 30 garden crops including wild ginseng
 * [Geb's Mushrooms](https://github.com/PackJC/gebsmushrooms) ([website](https://packjc.github.io/gebsmushrooms/)): 69 edible, poisonous and psychedelic fungi
 * [Alien Invasion](https://github.com/PackJC/alieninvasion) ([website](https://packjc.github.io/alieninvasion/)): UFO crash sites, Little Green Men and the Montauk plasma rifle
-* [Geb's Aircraft](https://github.com/PackJC/gebsaircraft) ([website](https://packjc.github.io/gebsaircraft/)) (this mod): the Super Cub, the Bf 109 and two floatplanes
+* [Geb's Aircraft](https://github.com/PackJC/gebsaircraft) ([website](https://packjc.github.io/gebsaircraft/)) (this mod): the Super Cub, the Bf 109, the He 162 and two floatplanes
 * [Thanksgiving](https://steamcommunity.com/sharedfiles/filedetails/?id=2886269800) (Workshop): Pilgrim clothes, turkeys and a flintlock musket for the holiday
 * [Great Smoky Mountains](https://github.com/PackJC/greatsmokymountains) ([Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2812533524)): a 20 x 20 km map of the Smokies at real scale
 
@@ -266,6 +297,7 @@ Every mod by Geb stands on its own, so a server can run the ones it wants:
 - Geb — creator and author
 - **Bf 109 E-3 model:** - **Piper PA-18 model:** CadNav (cadnav.com), `Models_E0502A085`, used under its terms: free to use and modify as part of a project, not to be resold or redistributed on its own, the source credited. Rebuilt and repainted here: the engine and a photo left out, the swastika painted off its fin, the upper camouflage, undersides, markings, cockpit, instrument faces and placards painted from scratch.
 - **Bf 109 sounds:** synthesised from how a DB 601 makes them (no recordings).
+- **He 162 A-2 source model:** [CadNav](http://www.cadnav.com/), archive `1-131125222311`, `HE 162 A2 SALAMANDER/He162.max`. Used under the readme supplied with the archive: use and modification as part of a project, with CadNav credited; standalone resale or redistribution of the model is prohibited. Converted and adapted for DayZ, with new materials, instrument artwork, controls, gear rig and original synthesized jet sounds. The source readme is retained with the authoring source outside this repository.
 - **Floats:** modelled here; the 109 W's after a photo of a 109 on floats. Their water sounds and spray are vanilla DayZ's boat's, used from the game, not copied.
 - **Cub engine audio:** vanilla's Sarka (CivilianSedan) engine, standing in until the Cub has recordings of its own.
 

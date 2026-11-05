@@ -470,6 +470,7 @@ class GebsPlane : Transport
 	// propeller and engine
 	protected bool m_ConstantSpeed;		//!< a governed propeller (otherwise fixed pitch)
 	protected float m_StaticThrust;		//!< N at full power, standing still, sea level
+	protected bool m_ThrustAtCom;		//!< thrustAtCom=1: the thrust acts at the centre of gravity's height, not the hub's (a jet set high on its back)
 	protected float m_PropPitchSpeed;	//!< fixed pitch: m/s at which the propeller stops pulling
 	protected float m_PropEfficiency;	//!< constant speed: of the shaft power, what becomes thrust at speed
 	protected float m_PropDiameter;		//!< m
@@ -620,7 +621,7 @@ class GebsPlane : Transport
 	protected float m_NetTrim;
 	protected float m_NetThrottle;
 	protected float m_NetPower;
-	protected float m_NetRpm;			//!< engine rpm, 0 .. 4000
+	protected float m_NetRpm;			//!< engine rpm, 0 .. 20000 (piston and turbine aircraft)
 	protected float m_NetGear;
 	protected bool m_NetGearDown = true;
 	protected bool m_NetSwitch;			//!< the ignition (GebsPlaneControls.m_Ignition)
@@ -723,7 +724,7 @@ class GebsPlane : Transport
 		RegisterNetSyncVariableFloat("m_NetTrim", -1, 1, 2);
 		RegisterNetSyncVariableFloat("m_NetThrottle", 0, 1, 2);
 		RegisterNetSyncVariableFloat("m_NetPower", 0, 1, 2);
-		RegisterNetSyncVariableFloat("m_NetRpm", 0, 4000, 0);
+		RegisterNetSyncVariableFloat("m_NetRpm", 0, 20000, 0);
 		RegisterNetSyncVariableFloat("m_NetGear", 0, 1, 2);
 		RegisterNetSyncVariableBool("m_NetGearDown");
 		RegisterNetSyncVariableBool("m_NetSwitch");
@@ -848,6 +849,7 @@ class GebsPlane : Transport
 		string prop = FlightText("propType");
 		m_ConstantSpeed = prop == "constantSpeed";
 		m_StaticThrust = Math.Max(FlightFloat("staticThrust"), 1);
+		m_ThrustAtCom = FlightFloat("thrustAtCom") != 0;
 		m_PropPitchSpeed = Math.Max(FlightFloat("propPitchSpeed"), 1);
 		m_PropEfficiency = Math.Clamp(FlightFloat("propEfficiency"), 0.3, 0.95);
 		m_PropDiameter = Math.Max(FlightFloat("propDiameter"), 0.1);
@@ -1976,7 +1978,13 @@ class GebsPlane : Transport
 			m_Slipstream = (Math.Sqrt(v0 * v0 + 2 * thrust / (rho * disc)) - v0) * m_SlipstreamGain;
 		}
 
-		AirForceAt(SimPoint(m_PropHub), fwdW * thrust);
+		vector thrustPoint = m_PropHub;
+		if (m_ThrustAtCom)
+		{
+			vector com = dBodyGetCenterOfMass(this);
+			thrustPoint[1] = com[1];
+		}
+		AirForceAt(SimPoint(thrustPoint), fwdW * thrust);
 
 		float omega = Math.Max(m_PropRpm * RPM_TO_RAD, 30);
 		if (m_TorqueGain > 0 && m_EnginePower > 0.001)

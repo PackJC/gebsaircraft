@@ -182,7 +182,7 @@
               <tr><td><kbd>X</kbd> / <kbd>R</kbd></td><td>Flaps down / up a step</td></tr>
               <tr><td><kbd>Page Up</kbd> / <kbd>Page Down</kbd></td><td>Trim nose up / down</td></tr>
               <tr><td><kbd>Space</kbd></td><td>Wheel brakes</td></tr>
-              <tr><td><kbd>G</kbd></td><td>Landing gear up / down (Bf 109 E-3)</td></tr>
+              <tr><td><kbd>G</kbd></td><td>Landing gear up / down (Bf 109 E-3 and He 162)</td></tr>
               <tr><td>Hold the start action</td><td>Start the engine; click it to stop</td></tr>
               <tr><td>Hold <kbd>F</kbd></td><td>Get in or out, anywhere near the cockpit: the door or canopy opens by itself</td></tr>
             </tbody>
@@ -274,7 +274,7 @@
     &lt;cost&gt;100&lt;/cost&gt;
     &lt;flags count_in_cargo="0" count_in_hoarder="0" count_in_map="1" count_in_player="0" crafted="0" deloot="0"/&gt;
 &lt;/type&gt;</code></pre></div><p><a class="link-arrow" href="server/gebsaircraft-types.xml" download>Download every plane's rows</a></p></div></li>
-            <li><span class="num">5</span><div><h3>Give the planes their wheels in <code>cfgspawnabletypes.xml</code></h3><p>So a Cub or a Bf 109 the economy spawns comes on both main wheels. The floatplanes need nothing.</p><div class="code"><span class="code-file">cfgspawnabletypes.xml</span><button class="copy" type="button" data-copy="ce-spawn">Copy</button><pre><code id="ce-spawn" class="language-xml">&lt;type name="GebsPA18_Yellow"&gt;
+            <li><span class="num">5</span><div><h3>Give the planes their wheels in <code>cfgspawnabletypes.xml</code></h3><p>So a Cub or a Bf 109 the economy spawns comes on both main wheels. The He 162 needs two <code>GebsHe162_Wheel</code> mains and one <code>GebsHe162_NoseWheel</code>; all three are included in the download. The floatplanes need nothing.</p><div class="code"><span class="code-file">cfgspawnabletypes.xml</span><button class="copy" type="button" data-copy="ce-spawn">Copy</button><pre><code id="ce-spawn" class="language-xml">&lt;type name="GebsPA18_Yellow"&gt;
     &lt;attachments chance="1.00"&gt;
         &lt;item name="GebsPA18_Wheel" chance="1.0" /&gt;
     &lt;/attachments&gt;
